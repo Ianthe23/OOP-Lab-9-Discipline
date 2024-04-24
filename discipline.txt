@@ -1,0 +1,10 @@
+mate,4,real,Alexe
+info,6,real,Alexe
+mate,2,uman,Ionescu
+mate,2,uman,Marin
+info,4,real,Ionescu
+info,4,real,Marin
+bio,3,real,Popescu
+bio,2,uman,Pop
+chimie,3,real,Marinescu
+chimie,3,real,Musat
