@@ -12,10 +12,10 @@ public:
 
 class UndoAdauga : public UndoActiuni {
 	Disciplina disciplinaAdaugata;
-	Repo& repo;
+	RepoAbs& repo;
 
 public:
-	UndoAdauga(Repo& repo, const Disciplina& disciplina) : repo{ repo }, disciplinaAdaugata{ disciplina } {
+	UndoAdauga(RepoAbs& repo, const Disciplina& disciplina) : repo{ repo }, disciplinaAdaugata{ disciplina } {
 	}
 
 	void doUndo() override {
@@ -25,10 +25,10 @@ public:
 
 class UndoSterge : public UndoActiuni {
 	Disciplina disciplinaStearsa;
-	Repo& repo;
+	RepoAbs& repo;
 
 public:
-	UndoSterge(Repo& repo, const Disciplina& disciplina) : repo{ repo }, disciplinaStearsa{ disciplina } {
+	UndoSterge(RepoAbs& repo, const Disciplina& disciplina) : repo{ repo }, disciplinaStearsa{ disciplina } {
 	}
 
 	void doUndo() override {
@@ -38,10 +38,10 @@ public:
 
 class UndoModifica : public UndoActiuni {
 	Disciplina disciplinaModificata;
-	Repo& repo;
+	RepoAbs& repo;
 
 public:
-	UndoModifica(Repo& repo, const Disciplina& disciplina) : repo{ repo }, disciplinaModificata{ disciplina } {
+	UndoModifica(RepoAbs& repo, const Disciplina& disciplina) : repo{ repo }, disciplinaModificata{ disciplina } {
 	}
 
 	void doUndo() override {

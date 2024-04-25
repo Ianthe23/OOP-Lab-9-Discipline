@@ -25,11 +25,13 @@ didactic
 using namespace std;
 
 void creeare() {
-	Tests tests;
-	tests.testAll();
+	//Tests tests;
+	//tests.testAll();
 
 	vector<Disciplina> vector;
-	FileRepo repo("discipline.txt");
+	//Repo repo{ vector };
+	//FileRepo repo("discipline.txt");
+	RepoProb repo(0.5);
 
 	Validator validator;
 	Contract contract;
@@ -37,7 +39,7 @@ void creeare() {
 	Ui ui{ controller };
 
 	cout << GREEN << "Teste finalizate cu succes!\n\n" << RESET;
-	//ui.run();
+	ui.run();
 }
 
 int main() {

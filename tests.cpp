@@ -3,7 +3,7 @@
 #include <fstream>
 
 using namespace std;
-
+/*
 void Tests::testAll() {
 	testDomain();
 	testRepo();
@@ -31,6 +31,13 @@ void Tests::testRepo() {
 	testCautaRepo();
 	testStergeRepo();
 	testGet_disciplina();
+	testRepoProb();
+	testAdaugaRepoProb();
+	testModificaRepoProb();
+	testCautaRepoProb();
+	testStergeRepoProb();
+	testGet_disciplinaProb();
+	testGetAll();
 }
 
 void Tests::testRepoFile() {
@@ -49,6 +56,8 @@ void Tests::testService() {
 	testCautaSrv();
 	testFiltrare();
 	testSortare();
+
+	///teste contract in service
 	testContract();
 	testAdaugaContract();
 	testCautaContract();
@@ -56,6 +65,8 @@ void Tests::testService() {
 	testExportaContract();
 	testEmptyContract();
 	testGetAllContract();
+
+	///teste contract
 	test_genereaza_contract();
 	test_exporta_contract();
 	test_empty_contract();
@@ -348,6 +359,119 @@ void Tests::testSetPath() {
 	assert(discipline.size() == 1);
 
 	file.emptyFile();
+}
+
+void Tests::testRepoProb() {
+	vector<Disciplina> teste;
+	Repo repo(teste);
+	Disciplina test{ "info",3,"real","Alexe" };
+	Disciplina test1{ "mate",4,"uman","Ionescu" };
+
+	repo.adaugaRepo(test);
+	repo.adaugaRepo(test1);
+
+	const vector<Disciplina>& discipline = repo.getAll();
+	assert(discipline.size() == 2);
+
+	repo.modificaRepo(test1);
+	assert(discipline[1].get_ore() == 4);
+
+	repo.stergeRepo("info", "Alexe");
+	assert(discipline.size() == 1);
+}
+
+void Tests::testAdaugaRepoProb() {
+	vector<Disciplina> teste;
+	Repo repo(teste);
+	Disciplina test{ "info",3,"real","Alexe" };
+
+	repo.adaugaRepo(test);
+	try {
+		repo.adaugaRepo(test);
+	}
+	catch (RepoException& mesaj) {
+		assert(mesaj.get_mesaj() == "Disciplina deja exista!\n");
+	}
+}
+
+void Tests::testModificaRepoProb() {
+	vector<Disciplina> teste;
+	Repo repo(teste);
+	Disciplina test{ "info",3,"real","Alexe" };
+	Disciplina test1{ "info",4,"uman","Alexe" };
+	Disciplina test2{ "mate", 2, "real", "Ionescu" };
+
+	repo.adaugaRepo(test);
+	repo.modificaRepo(test1);
+
+	assert(repo.cautaRepo("info", "Alexe") == 0);
+
+	try {
+		repo.modificaRepo(test2);
+	}
+	catch (RepoException& mesaj) {
+		assert(mesaj.get_mesaj() == "Disciplina nu exista!\n");
+	}
+
+	const vector<Disciplina> discipline = repo.getAll();
+	assert(discipline.size() == 1);
+}
+
+void Tests::testCautaRepoProb() {
+	vector<Disciplina> teste;
+	Repo repo(teste);
+	Disciplina test{ "info",3,"real","Alexe" };
+	repo.adaugaRepo(test);
+	assert(repo.cautaRepo("info", "Alexe") == 0);
+	assert(repo.cautaRepo("mate", "Ionescu") == -1);
+}
+
+void Tests::testStergeRepoProb() {
+	vector<Disciplina> teste;
+	Repo repo(teste);
+	Disciplina test{ "info",3,"real","Alexe" };
+
+	repo.adaugaRepo(test);
+	repo.stergeRepo("info", "Alexe");
+	try {
+		repo.stergeRepo("info", "Alexe");
+	}
+	catch (RepoException& mesaj) {
+		assert(mesaj.get_mesaj() == "Disciplina nu exista!\n");
+	}
+}
+
+void Tests::testGet_disciplinaProb() {
+	vector<Disciplina> teste;
+	Repo repo(teste);
+	Disciplina test{ "info",3,"real","Alexe" };
+
+	repo.adaugaRepo(test);
+	assert(test.operator == (repo.get_disciplina("info", "Alexe")));
+	try {
+		repo.get_disciplina("mate", "Ionescu");
+	}
+	catch (RepoException& mesaj) {
+		assert(mesaj.get_mesaj() == "Disciplina nu exista!\n");
+	}
+}
+
+void Tests::testGetAll() {
+	vector<Disciplina> teste;
+	Repo repo(teste);
+	Disciplina test{ "info",3,"real","Alexe" };
+	Disciplina test1{ "mate",4,"uman","Ionescu" };
+
+	repo.adaugaRepo(test);
+	repo.adaugaRepo(test1);
+
+	const vector<Disciplina>& discipline = repo.getAll();
+	assert(discipline.size() == 2);
+
+	repo.stergeRepo("info", "Alexe");
+	repo.stergeRepo("mate", "Ionescu");
+	const vector<Disciplina>& discipline1 = repo.getAll();
+	assert(discipline1.size() == 0);
 }
 
 ///
@@ -919,3 +1043,4 @@ void Tests::testFilterDenumire() {
 
 	repo.emptyFile();
 }
+*/

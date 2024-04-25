@@ -2,6 +2,73 @@
 
 #include <iostream>
 
+RepoProb::RepoProb(float probabilitate) {
+	this->probabilitate = probabilitate;
+	elemente.clear();
+}
+
+void RepoProb::adaugaRepo(const Disciplina& disciplina) {
+	det_luck();
+	elemente.insert(make_pair(elemente.size(), disciplina));
+}
+
+void RepoProb::modificaRepo(const Disciplina& disciplina_noua) {
+	det_luck();
+	for (auto& [key, value] : elemente) {
+		if (value == disciplina_noua) {
+			value = disciplina_noua;
+			return;
+		}
+	}
+}
+
+void RepoProb::stergeRepo(const string& denumire, const string& profesor) {
+	det_luck();
+	for (auto& [key, value] : elemente) {
+		if (value.get_denumire() == denumire && value.get_profesor() == profesor) {
+			elemente.erase(key);
+			return;
+		}
+	}
+}
+
+int RepoProb::cautaRepo(const string& denumire, const string& profesor) {
+	det_luck();
+	for (const auto& [key, value] : elemente) {
+		if (value.get_denumire() == denumire && value.get_profesor() == profesor) {
+			return key;
+		}
+	}
+	return -1;
+}
+
+Disciplina& RepoProb::get_disciplina(const string& denumire, const string& profesor) {
+	det_luck();
+	for (auto& [key, value] : elemente) {
+		if (value.get_denumire() == denumire && value.get_profesor() == profesor) {
+			return value;
+		}
+	}
+	throw RepoException("Disciplina nu exista!\n");
+}
+vector<Disciplina> discipline;
+vector<Disciplina>& RepoProb::getAll() {
+	discipline.clear();
+	for (const auto& [key, value] : elemente) {
+		discipline.push_back(value);
+	}
+	return discipline;
+}
+
+void RepoProb::det_luck() {
+	auto prb = int(probabilitate * 10);
+	int nr = rand() % 10;
+	if (nr <= prb) {
+		return;
+	}
+	throw BadLuckException("Teapa curata!\n");
+}
+
 int Repo::cautaRepo(const string& denumire, const string& profesor) {
 
 	auto iterator = find_if(this->discipline.begin(),
@@ -62,7 +129,7 @@ void Repo::stergeRepo(const string& denumire, const string& profesor) {
 	}
 }
 
-const Disciplina& Repo::get_disciplina(const string& denumire, const string& profesor) {
+Disciplina& Repo::get_disciplina(const string& denumire, const string& profesor) {
 
 	const int index = cautaRepo(denumire, profesor);
 
@@ -74,6 +141,6 @@ const Disciplina& Repo::get_disciplina(const string& denumire, const string& pro
 	}
 }
 
-const vector<Disciplina>& Repo::getAll() const noexcept {
+vector<Disciplina>& Repo::getAll() {
 	return this->discipline;
 }

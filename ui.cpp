@@ -167,8 +167,8 @@ void Ui::printDiscipline(const vector<Disciplina>& discipline) {
 
 void Ui::printAll() {
 	const vector<Disciplina>& discipline = controller.getAll();
-	cout << '\n' << MAGENTA << "Lista disciplinelor:\n" << RESET;
 	if (!discipline.empty()) {
+		cout << '\n' << MAGENTA << "Lista disciplinelor:\n" << RESET;
 		for (const Disciplina& disciplina : discipline) {
 			cout << disciplina.to_string_print() << '\n';
 		}
@@ -291,6 +291,9 @@ void Ui::run() {
 			catch (ValidatorException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
+			catch (BadLuckException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
 			break;
 		case 2:
 			try {
@@ -301,6 +304,9 @@ void Ui::run() {
 				cout << RED << e.get_mesaj() << RESET;
 			}
 			catch (ValidatorException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
+			catch (BadLuckException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
 			break;
@@ -315,6 +321,9 @@ void Ui::run() {
 			catch (ValidatorException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
+			catch (BadLuckException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
 			break;
 		case 4:
 			try {
@@ -324,6 +333,9 @@ void Ui::run() {
 				cout << RED << e.get_mesaj() << RESET;
 			}
 			catch (ValidatorException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
+			catch (BadLuckException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
 			break;
@@ -337,6 +349,9 @@ void Ui::run() {
 			catch (ValidatorException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
+			catch (BadLuckException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
 			break;
 		case 6:
 			try {
@@ -348,6 +363,9 @@ void Ui::run() {
 			catch (ValidatorException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
+			catch (BadLuckException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
 			break;
 		case 7:
 			try {
@@ -356,6 +374,9 @@ void Ui::run() {
 			}
 			catch (RepoException& e) {
 				cout << RED << e.get_mesaj() << RESET;
+			}
+			catch (BadLuckException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
 			}
 			break;	
 		case 8:
@@ -369,6 +390,9 @@ void Ui::run() {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
 			catch (ContractException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
+			catch (BadLuckException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
 			break;
@@ -385,6 +409,9 @@ void Ui::run() {
 			catch (ContractException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
+			catch (BadLuckException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
 			break;
 		case 10:
 			try {
@@ -397,6 +424,9 @@ void Ui::run() {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
 			catch (ContractException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
+			catch (BadLuckException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
 			break;
@@ -413,6 +443,9 @@ void Ui::run() {
 			catch (ContractException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
+			catch (BadLuckException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
 			break;
 		case 12:
 			try {
@@ -425,6 +458,9 @@ void Ui::run() {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
 			catch (ContractException& ve) {
+				cout << RED << ve.get_mesaj() << RESET;
+			}
+			catch (BadLuckException& ve) {
 				cout << RED << ve.get_mesaj() << RESET;
 			}
 			break;

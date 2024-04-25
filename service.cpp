@@ -6,8 +6,6 @@ void Service::undo() {
 	}
 	undoActiuni.back()->doUndo();
 	undoActiuni.pop_back();
-
-	repo.saveToFile();
 }
 
 const vector<Disciplina>& Service::getAllContract() noexcept {
@@ -71,18 +69,15 @@ void Service::adaugaSrv(const string& denumire, int ore, const string& tip, cons
 	validator.valideazaDisciplina(disciplina);
 	repo.adaugaRepo(disciplina);
 	undoActiuni.push_back(std::make_unique<UndoAdauga>(repo, disciplina));
-	repo.saveToFile();
 }
 
 
 void Service::modificaSrv(const string& denumire, int ore, const string& tip, const string& profesor) {
 	Disciplina disciplina{ denumire, ore, tip, profesor };
 	Disciplina disciplina_veche = repo.get_disciplina(denumire, profesor);
-
 	validator.valideazaDisciplina(disciplina);
 	repo.modificaRepo(disciplina);
 	undoActiuni.push_back(std::make_unique<UndoModifica>(repo, disciplina_veche));
-	repo.saveToFile();
 }
 
 
@@ -90,16 +85,15 @@ void Service::stergeSrv(const string& denumire, const string& profesor) {
 	Disciplina copie = repo.get_disciplina(denumire, profesor);	
 	repo.stergeRepo(denumire, profesor);
 	undoActiuni.push_back(std::make_unique<UndoSterge>(repo, copie));
-	repo.saveToFile();
 }
 
 
-const Disciplina& Service::cautaSrv(const string& denumire, const string& profesor) {
+Disciplina& Service::cautaSrv(const string& denumire, const string& profesor) {
 	return repo.get_disciplina(denumire, profesor);
 }
 
 
-const vector<Disciplina>& Service::getAll() noexcept {
+vector<Disciplina>& Service::getAll() {
 	return this->repo.getAll();
 }
 

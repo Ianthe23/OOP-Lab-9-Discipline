@@ -24,7 +24,7 @@ using std::copy_if;
 using std::shuffle;
 
 class Service {
-	FileRepo& repo;
+	RepoAbs& repo;
 	Validator& validator;
 	Contract& contract;
 	std::vector<unique_ptr<UndoActiuni>> undoActiuni;
@@ -47,7 +47,7 @@ public:
 
 	map<string, DTO> raport() noexcept;
 
-	Service(FileRepo& repo, Validator& validator, Contract& contract) noexcept : repo{ repo }, validator{ validator }, contract{ contract } {
+	Service(RepoAbs& repo, Validator& validator, Contract& contract) noexcept : repo{ repo }, validator{ validator }, contract{ contract } {
 
 	}
 	
@@ -76,9 +76,9 @@ public:
 	* Cauta o disciplina dupa denumire si profesor
 	* Arunca exceptie daca: disciplina nu exista
 	*/
-	const Disciplina& cautaSrv(const string& denumire, const string& profesor);
+	Disciplina& cautaSrv(const string& denumire, const string& profesor);
 
-	const vector<Disciplina>& getAll() noexcept;
+	vector<Disciplina>& getAll();
 
 	
 	/// FILTRARI
