@@ -7,7 +7,7 @@ FileRepo::FileRepo(const string& numeFisier) {
 }
 
 void FileRepo::loadFromFile() {
-	std::ifstream fin(numeFisier);
+	std::ifstream fin(this->numeFisier);
 	Disciplina disciplina{};
 	Disciplina disciplina_anterioara{};
 
@@ -20,7 +20,7 @@ void FileRepo::loadFromFile() {
 }
 
 void FileRepo::saveToFile() {
-	std::ofstream fout(numeFisier);
+	std::ofstream fout(this->numeFisier);
 
 	for (const auto& disciplina : this->getAll()) {
 		fout << disciplina;
@@ -30,7 +30,7 @@ void FileRepo::saveToFile() {
 }
 
 void FileRepo::emptyFile() {
-	std::ofstream fout(numeFisier);
+	std::ofstream fout(this->numeFisier);
 	fout << "";
 	fout.close();
 }

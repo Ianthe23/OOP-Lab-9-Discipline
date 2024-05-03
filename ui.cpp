@@ -253,7 +253,7 @@ void Ui::menu() {
 	cout << YELLOW << "------------------------------------------------------------------\n" << RESET;
 	cout << YELLOW << "8." << RESET << " Genereaza un contract;\n";
 	cout << YELLOW << "9." << RESET << " Adauga la contract;\n";
-	cout << YELLOW << "10." << RESET << " Exporta contract;\n";
+	cout << YELLOW << "10." << RESET << "Exporta contract;\n";
 	cout << YELLOW << "11." << RESET << "Goleste contract;\n";
 	cout << YELLOW << "12." << RESET << "Genereaza Raport;\n";
 	cout << YELLOW << "0." << RESET << " Exit.\n";
@@ -264,7 +264,13 @@ void Ui::run() {
 	int comanda = -1;
 
 	while (true) {
-		printAll();
+		try {
+			printAll();
+		}
+		catch (BadLuckException& ve) {
+			cout << RED << ve.get_mesaj() << RESET;
+		}
+
 		menu();
 
 		cout << BLUE << "Introduceti comanda: " << RESET;

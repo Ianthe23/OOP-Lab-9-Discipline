@@ -25,13 +25,13 @@ didactic
 using namespace std;
 
 void creeare() {
-	//Tests tests;
-	//tests.testAll();
+	Tests tests;
+	tests.testAll();
 
 	vector<Disciplina> vector;
 	//Repo repo{ vector };
-	//FileRepo repo("discipline.txt");
-	RepoProb repo(0.5);
+	FileRepo repo("discipline.txt");
+	//RepoProb repo(0.67);
 
 	Validator validator;
 	Contract contract;

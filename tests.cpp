@@ -3,7 +3,7 @@
 #include <fstream>
 
 using namespace std;
-/*
+
 void Tests::testAll() {
 	testDomain();
 	testRepo();
@@ -32,6 +32,7 @@ void Tests::testRepo() {
 	testStergeRepo();
 	testGet_disciplina();
 	testRepoProb();
+	testBadLuck();
 	testAdaugaRepoProb();
 	testModificaRepoProb();
 	testCautaRepoProb();
@@ -299,40 +300,25 @@ void Tests::testGet_disciplina() {
 }
 
 void Tests::testFile() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
 	Disciplina test{ "info",3,"real","Alexe" };
 	Disciplina test1{ "mate",4,"uman","Ionescu" };
 
 	FileRepo file("test_file.txt");
-	file.emptyFile();
 	file.adaugaRepo(test);
 	file.adaugaRepo(test1);
 
-	file.saveToFile();
-
 	const vector<Disciplina>& discipline = file.getAll();
 	assert(file.getAll().size() == 2);
-
-	//test load from file
-	file.stergeRepo("info", "Alexe");
-	file.stergeRepo("mate", "Ionescu");
-	file.loadFromFile();
-	const vector<Disciplina>& discipline1 = file.getAll();
-	assert(discipline1.size() == 2);
 
 	file.emptyFile();
 }
 
 void Tests::testEmptyFile() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
 	Disciplina test{ "info",3,"real","Alexe" };
 
 	FileRepo file("test_file.txt");
 	file.emptyFile();
 	file.adaugaRepo(test);
-	file.saveToFile();
 
 	const vector<Disciplina>& discipline = file.getAll();
 	assert(discipline.size() == 1);
@@ -341,11 +327,11 @@ void Tests::testEmptyFile() {
 	const vector<Disciplina>& discipline1 = file.getAll();
 	assert(discipline1.size() == 1);
 
+	file.emptyFile();
+
 }
 
 void Tests::testSetPath() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
 	Disciplina test{ "info",3,"real","Alexe" };
 
 	FileRepo file("test_file.txt");
@@ -353,17 +339,18 @@ void Tests::testSetPath() {
 
 	file.adaugaRepo(test);
 	file.setPath("test_file1.txt");
-	file.saveToFile();
-
+	
 	const vector<Disciplina>& discipline = file.getAll();
 	assert(discipline.size() == 1);
 
 	file.emptyFile();
+
+	file.setPath("test_file.txt");
+	file.emptyFile();
 }
 
 void Tests::testRepoProb() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
+	RepoProb repo(1);
 	Disciplina test{ "info",3,"real","Alexe" };
 	Disciplina test1{ "mate",4,"uman","Ionescu" };
 
@@ -377,26 +364,35 @@ void Tests::testRepoProb() {
 	assert(discipline[1].get_ore() == 4);
 
 	repo.stergeRepo("info", "Alexe");
-	assert(discipline.size() == 1);
+	const vector<Disciplina>& discipline1 = repo.getAll();
+	assert(discipline1.size() == 1);
 }
 
-void Tests::testAdaugaRepoProb() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
+void Tests::testBadLuck() {
+	RepoProb repo(0);
 	Disciplina test{ "info",3,"real","Alexe" };
 
-	repo.adaugaRepo(test);
 	try {
 		repo.adaugaRepo(test);
 	}
-	catch (RepoException& mesaj) {
-		assert(mesaj.get_mesaj() == "Disciplina deja exista!\n");
+	catch (BadLuckException& mesaj) {
+		assert(mesaj.get_mesaj() == "Teapa curata!\n");
 	}
+
+}
+
+void Tests::testAdaugaRepoProb() {
+	RepoProb repo(1);
+	Disciplina test{ "info",3,"real","Alexe" };
+
+	repo.adaugaRepo(test);
+
+	assert(repo.getAll().size() == 1);
 }
 
 void Tests::testModificaRepoProb() {
 	vector<Disciplina> teste;
-	Repo repo(teste);
+	RepoProb repo(1);
 	Disciplina test{ "info",3,"real","Alexe" };
 	Disciplina test1{ "info",4,"uman","Alexe" };
 	Disciplina test2{ "mate", 2, "real", "Ionescu" };
@@ -406,20 +402,12 @@ void Tests::testModificaRepoProb() {
 
 	assert(repo.cautaRepo("info", "Alexe") == 0);
 
-	try {
-		repo.modificaRepo(test2);
-	}
-	catch (RepoException& mesaj) {
-		assert(mesaj.get_mesaj() == "Disciplina nu exista!\n");
-	}
-
 	const vector<Disciplina> discipline = repo.getAll();
 	assert(discipline.size() == 1);
 }
 
 void Tests::testCautaRepoProb() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
+	RepoProb repo(1);
 	Disciplina test{ "info",3,"real","Alexe" };
 	repo.adaugaRepo(test);
 	assert(repo.cautaRepo("info", "Alexe") == 0);
@@ -427,23 +415,17 @@ void Tests::testCautaRepoProb() {
 }
 
 void Tests::testStergeRepoProb() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
+	RepoProb repo(1);
 	Disciplina test{ "info",3,"real","Alexe" };
 
 	repo.adaugaRepo(test);
 	repo.stergeRepo("info", "Alexe");
-	try {
-		repo.stergeRepo("info", "Alexe");
-	}
-	catch (RepoException& mesaj) {
-		assert(mesaj.get_mesaj() == "Disciplina nu exista!\n");
-	}
+
+	assert(repo.getAll().size() == 0);	
 }
 
 void Tests::testGet_disciplinaProb() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
+	RepoProb repo(1);
 	Disciplina test{ "info",3,"real","Alexe" };
 
 	repo.adaugaRepo(test);
@@ -457,8 +439,7 @@ void Tests::testGet_disciplinaProb() {
 }
 
 void Tests::testGetAll() {
-	vector<Disciplina> teste;
-	Repo repo(teste);
+	RepoProb repo(1);
 	Disciplina test{ "info",3,"real","Alexe" };
 	Disciplina test1{ "mate",4,"uman","Ionescu" };
 
@@ -479,7 +460,6 @@ void Tests::testGetAll() {
 ///
 
 void Tests::testAdaugaSrv() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -503,7 +483,6 @@ void Tests::testAdaugaSrv() {
 }
 
 void Tests::testUndoAdauga() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -527,7 +506,6 @@ void Tests::testUndoAdauga() {
 }
 
 void Tests::testCautaSrv() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -553,7 +531,6 @@ void Tests::testCautaSrv() {
 }
 
 void Tests::testModificaSrv() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -579,7 +556,6 @@ void Tests::testModificaSrv() {
 }
 
 void Tests::testUndoModifica() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -601,7 +577,6 @@ void Tests::testUndoModifica() {
 }
 
 void Tests::testStergeSrv() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -630,7 +605,6 @@ void Tests::testStergeSrv() {
 }
 
 void Tests::testUndoSterge() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -652,7 +626,6 @@ void Tests::testUndoSterge() {
 }
 
 void Tests::testSortare() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -686,7 +659,6 @@ void Tests::testSortare() {
 }
 
 void Tests::testFiltrare() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -710,7 +682,6 @@ void Tests::testFiltrare() {
 }
 
 void Tests::testContract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -739,7 +710,6 @@ void Tests::testContract() {
 }
 
 void Tests::testAdaugaContract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -770,7 +740,6 @@ void Tests::testAdaugaContract() {
 }
 
 void Tests::testCautaContract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -789,7 +758,6 @@ void Tests::testCautaContract() {
 }
 
 void Tests::testGenereazaContract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -818,7 +786,6 @@ void Tests::testGenereazaContract() {
 }
 
 void Tests::testExportaContract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -840,7 +807,6 @@ void Tests::testExportaContract() {
 }
 
 void Tests::testEmptyContract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -862,7 +828,6 @@ void Tests::testEmptyContract() {
 }
 
 void Tests::testGetAllContract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -883,7 +848,6 @@ void Tests::testGetAllContract() {
 }
 
 void Tests::test_adauga_la_contract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -921,7 +885,6 @@ void Tests::test_adauga_la_contract() {
 }
 
 void Tests::test_genereaza_contract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -942,7 +905,6 @@ void Tests::test_genereaza_contract() {
 }
 
 void Tests::test_exporta_contract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -962,7 +924,6 @@ void Tests::test_exporta_contract() {
 }
 
 void Tests::test_empty_contract() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -984,7 +945,6 @@ void Tests::test_empty_contract() {
 }
 
 void Tests::test_getContractsize() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -1004,7 +964,6 @@ void Tests::test_getContractsize() {
 }
 
 void Tests::testRaport() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -1025,7 +984,6 @@ void Tests::testRaport() {
 }
 
 void Tests::testFilterDenumire() {
-	vector<Disciplina> teste;
 	FileRepo repo("test_service.txt");
 	Validator validator;
 	Contract contract;
@@ -1043,4 +1001,3 @@ void Tests::testFilterDenumire() {
 
 	repo.emptyFile();
 }
-*/

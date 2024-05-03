@@ -101,7 +101,8 @@ vector<Disciplina>& Service::getAll() {
 vector<Disciplina> Service::filterOre(int ore) {
 	vector<Disciplina> filtered;
 
-	copy_if(repo.getAll().begin(), repo.getAll().end(), std::back_inserter(filtered),
+	const auto allDiscipline = repo.getAll();
+	copy_if(allDiscipline.begin(), allDiscipline.end(), std::back_inserter(filtered),
 		[ore](const Disciplina& disciplina) noexcept{
 		return disciplina.get_ore() == ore;
 		});
@@ -113,7 +114,8 @@ vector<Disciplina> Service::filterOre(int ore) {
 vector<Disciplina> Service::filterProfesor(const string& profesor) {
 	vector<Disciplina> filtered;
 
-	copy_if(repo.getAll().begin(), repo.getAll().end(), std::back_inserter(filtered),
+	const auto allDiscipline = repo.getAll();
+	copy_if(allDiscipline.begin(), allDiscipline.end(), std::back_inserter(filtered),
 		[profesor](const Disciplina& disciplina) noexcept{
 			return disciplina.get_profesor() == profesor;
 		});
@@ -124,7 +126,8 @@ vector<Disciplina> Service::filterProfesor(const string& profesor) {
 vector<Disciplina> Service::filterDenumire(const string& denumire) {
 	vector<Disciplina> filtered;
 
-	copy_if(repo.getAll().begin(), repo.getAll().end(), std::back_inserter(filtered),
+	const auto allDiscipline = repo.getAll();
+	copy_if(allDiscipline.begin(), allDiscipline.end(), std::back_inserter(filtered),
 		[denumire](const Disciplina& disciplina) noexcept {
 			return disciplina.get_denumire() == denumire;
 		});

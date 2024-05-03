@@ -7,7 +7,7 @@
 #include "validator.h"
 #include "service.h"
 #include <assert.h>
-/*
+
 class Tests {
 	void testDomain();
 	void testConstructor_Getters();
@@ -28,6 +28,7 @@ class Tests {
 	void testStergeRepo();
 	void testGet_disciplina();
 	void testRepoProb();
+	void testBadLuck();
 	void testAdaugaRepoProb();
 	void testModificaRepoProb();
 	void testCautaRepoProb();
@@ -39,9 +40,9 @@ class Tests {
 	void testFile();
 	void testEmptyFile();
 	void testSetPath();
-
+	
 	void testValidator();
-
+	
 	void testService();
 	void testAdaugaSrv();
 	void testUndoAdauga();
@@ -66,7 +67,7 @@ class Tests {
 	void test_getContractsize();
 	void testRaport();
 	void testFilterDenumire();
-
+	
 
 public:
 	Tests() noexcept{};
@@ -75,6 +76,6 @@ public:
 
 	};
 };
-*/
+
 
 #endif /* TESTS_H_ */

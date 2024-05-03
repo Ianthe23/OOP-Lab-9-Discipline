@@ -41,6 +41,7 @@ private:
 	float probabilitate;
 	map<int, Disciplina> elemente;
 	void det_luck();
+	vector<Disciplina> discipline;
 
 public:
 	RepoProb() = default;
@@ -58,6 +59,8 @@ public:
 	Disciplina& get_disciplina(const string& denumire, const string& profesor) override;
 
 	vector<Disciplina>& getAll() override;
+
+	~RepoProb() = default;
 };
 
 class Repo : public RepoAbs{

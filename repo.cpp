@@ -51,8 +51,9 @@ Disciplina& RepoProb::get_disciplina(const string& denumire, const string& profe
 	}
 	throw RepoException("Disciplina nu exista!\n");
 }
-vector<Disciplina> discipline;
+
 vector<Disciplina>& RepoProb::getAll() {
+	det_luck();
 	discipline.clear();
 	for (const auto& [key, value] : elemente) {
 		discipline.push_back(value);

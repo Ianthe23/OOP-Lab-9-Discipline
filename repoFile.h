@@ -8,7 +8,6 @@ private:
 	string numeFisier;
 	void loadFromFile();
 	void saveToFile();
-	void emptyFile();
 public:
 	
 	explicit FileRepo(const string& numeFisier);
@@ -16,6 +15,8 @@ public:
 	[[maybe_unused]] void setPath(const string& numeFisier) {
 		this->numeFisier = numeFisier;
 	}
+
+	void emptyFile();
 
 	void adaugaRepo(const Disciplina& disciplina) override {
 		Repo::adaugaRepo(disciplina);
