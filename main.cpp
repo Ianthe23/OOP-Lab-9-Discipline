@@ -30,8 +30,8 @@ void creeare() {
 
 	vector<Disciplina> vector;
 	//Repo repo{ vector };
-	FileRepo repo("discipline.txt");
-	//RepoProb repo(0.67);
+	//FileRepo repo("discipline.txt");
+	RepoProb repo(0.34);
 
 	Validator validator;
 	Contract contract;
